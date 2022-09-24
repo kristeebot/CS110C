@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "clang++ - Build and debug active file",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "args": [
+            ],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "lldb",
+            "preLaunchTask": "C/C++: clang++ build active file",
+            // Had to download this after a lot of googling onto the MacBook,
+            // Because it's so old it needed an old build of lldb-mi.
+            // "miDebuggerPath": "/Users/kristinahelwing/.vscode/extensions/ms-vscode.cpptools-1.9.7/debugAdapters/lldb-mi/bin/lldb-mi"
+            // On the macbook this is a symlink into the Downloads folder, but on the desktop it's
+            // the regular one that VSCode installs. It's in .gitignore and shouldn't be deleted.
+            // "miDebuggerPath": "${workspaceFolder}/lldb-mi"
+        }
+    ]
+}
