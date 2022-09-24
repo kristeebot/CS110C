@@ -56,7 +56,9 @@ void listTester()
    listPtr->reverse();
    cout << "reversed list without item 3" << endl;
    displayList(listPtr);
-   
+   // remove the last node:
+   listPtr->remove(5);
+   displayList(listPtr);
 } // end listTester
 
 int main()

@@ -178,7 +178,10 @@ bool LinkedList<ItemType>::remove(int position)
          // Disconnect indicated node from chain by connecting the
          // prior node with the one after
          prevPtr->setNext(curPtr->getNext());
-         curPtr->getNext()->setPrev(prevPtr);
+         if (curPtr->getNext()) 
+         {
+            curPtr->getNext()->setPrev(prevPtr);
+         }
       } // end if
 
       // Return node to system
