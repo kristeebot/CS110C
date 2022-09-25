@@ -22,12 +22,17 @@ int countingSort(int *numbers, int size)
     return -1;
 }
 
-int *makeRandomArray(int numItems)
+int *makeRandomArray(int numItems, bool constrain = false)
 {
     int *myArray = new int[numItems];
     for (int i = 0; i < numItems; i++)
     {
-        myArray[i] = rand();
+        int value = rand();
+        if (constrain)
+        {
+            value = value % numItems;
+        }
+        myArray[i] = value;
     }
     return myArray;
 }
@@ -58,7 +63,7 @@ void printSortedStats(string sortType)
 {
     int pad = strlen("counting") - sortType.size();
     string outputStr = string(sortType);
-    for (int i = 0; i < pad; i++) 
+    for (int i = 0; i < pad; i++)
     {
         outputStr = outputStr + " ";
     }
@@ -81,8 +86,37 @@ void printSortedStats(string sortType)
         cout << total / 3 << endl;
     }
 }
-int main()
+bool isSorted(int *numbers, int size)
 {
+    if (size <= 1)
+    {
+        return true;
+    }
+    int previousElement = numbers[0];
+    for (int i = 1; i < size; i++)
+    {
+        if (previousElement > numbers[i])
+        {
+            return false;
+        }
+        previousElement = numbers[i];
+    }
+    return true;
+}
+void printArray(int *numbers, int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        cout << numbers[i] << ", ";
+    }
+    cout << endl;
+}
+int main()
+{   int *countSortInput = makeRandomArray(8, true);
+    printArray(countSortInput, 8);
+    countingSort(countSortInput, 8);
+    printArray(countSortInput, 8);
+    cout << "Is Sorted: " << isSorted(countSortInput, 8) << endl;
     int mergeSortInput[] = {5, 4, 3, 2, 1};
     int mergeSortAccessCount = mergeSort(mergeSortInput, 5);
     cout << "access count for merge sort was: " << mergeSortAccessCount << endl;
@@ -93,7 +127,7 @@ int main()
     int countingSortAccessCount = bubbleSort(countingSortInput, 5);
     cout << "access count for counting sort was: " << countingSortAccessCount << endl;
 
-    int *bubbleOneData = makeRandomArray(8);
+    int *bubbleOneData = makeRandomArray(8, true);
     bubbleSortAccessCount = bubbleSort(bubbleOneData, 8);
     cout << "Bubble array length of 8: " << bubbleSortAccessCount << endl;
     delete[] bubbleOneData;
