@@ -1,0 +1,17 @@
+CS110C
+PROF LUTTRELL
+KRISTINA HELWING
+092322
+ASSIGNMENT 4
+
+In big O notation, what is the expected efficiency? Ê
+Bubble: O(n2)
+Merge:  O(n log*n)
+Count: O(n)
+
+Why is counting sort impractical as a general sorting algorithm?
+Because the array size cannot be expanded; you have to constrain values to a fixed range. 
+Sort AlgorithmArray LengthArray Accesses
+Pass 1Array Accesses
+Pass 2Array Accesses
+Pass 3Average Array AccessesBubble8Ê1118712Bubble32Ê285246258263Bubble128Ê3513387940963829Merge8Ê82808281Merge32558560562560Merge1283248326232683259Counting8Ê16161616Counting32Ê64646464Counting128Ê256256256256

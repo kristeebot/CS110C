@@ -95,18 +95,18 @@ int mergeSort(int theArray[], int first, int last)
         accessCount += mergeSort(theArray, first, mid);
         accessCount += mergeSort(theArray, mid + 1, last);
         accessCount += merge(theArray, first, mid, last);
-        
+
     } // end if
     return accessCount;
 }
 
 int mergeSort(int *numbers, int size)
 {
-    //cout << "before: " << endl;
-    //printArray(numbers, size);
+    // cout << "before: " << endl;
+    // printArray(numbers, size);
     int accessCount = size > 0 ? mergeSort(numbers, 0, size - 1) : 0;
-    //cout << "after: " << endl;
-    //printArray(numbers, size);
+    // cout << "after: " << endl;
+    // printArray(numbers, size);
     return accessCount;
 }
 
@@ -238,30 +238,34 @@ void printSortedStats(string sortType)
 }
 int main()
 {
-    int mergeSortInput[] = {1, 4, 5, 4, 3, 2, 3};
-    int mergeSortAccessCount = mergeSort(mergeSortInput, 7);
-    cout << "access count for merge sort was: " << mergeSortAccessCount << endl;
 
-    int *countSortInput = makeRandomArray(8, true);
-    // printArray(countSortInput, 8);
-    countingSort(countSortInput, 8);
-    // printArray(countSortInput, 8);
-    cout << "Is Sorted: " << isSorted(countSortInput, 8) << endl;
-    delete[] countSortInput;
-    int bubbleSortInput[] = {5, 4, 3, 2, 1};
-    int bubbleSortAccessCount = bubbleSort(bubbleSortInput, 5);
-    cout << "access count for bubble sort was: " << bubbleSortAccessCount << endl;
-    int countingSortInput[] = {5, 4, 3, 2, 1};
-    int countingSortAccessCount = countingSort(countingSortInput, 5);
-    cout << "access count for counting sort was: " << countingSortAccessCount << endl;
-
-    int *bubbleOneData = makeRandomArray(8, true);
-    bubbleSortAccessCount = bubbleSort(bubbleOneData, 8);
-    cout << "Bubble array length of 8: " << bubbleSortAccessCount << endl;
-    delete[] bubbleOneData;
+    // Table headers:
+    cout << "Sort Algorithm"
+         << "\t";
+    cout << "Length"
+         << "\t";
+    cout << "Pass 1"
+         << "\t";
+    cout << "Pass 2"
+         << "\t";
+    cout << "Pass 3"
+         << "\t";
+    cout << "AVG" << endl;
     printSortedStats("bubble");
     printSortedStats("merge");
     printSortedStats("counting");
 
     return 0;
 }
+/*SAMPLE OUTPUT
+Sort Algorithm	Length	Pass 1	Pass 2	Pass 3	AVG
+bubble  	    8	    11	    18	    7	    12
+bubble  	    32	    285	    246	    258	    263
+bubble  	    128	    3513	3879	4096	3829
+merge   	    8	    82	    80	    82	    81
+merge   	    32	    558	    560	    562 	560
+merge   	    128	    3248	3262	3268	3259
+counting	    8	    16	    16	    16	    16
+counting	    32	    64	    64	    64	    64
+counting	    128	    256	    256	    256	    256
+*/
