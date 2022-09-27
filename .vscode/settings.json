@@ -32,7 +32,12 @@
         "streambuf": "cpp",
         "string": "cpp",
         "cstdlib": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "__mutex_base": "cpp",
+        "array": "cpp",
+        "sstream": "cpp",
+        "string_view": "cpp",
+        "variant": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
