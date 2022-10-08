@@ -22,7 +22,7 @@
             // "miDebuggerPath": "/Users/kristinahelwing/.vscode/extensions/ms-vscode.cpptools-1.9.7/debugAdapters/lldb-mi/bin/lldb-mi"
             // On the macbook this is a symlink into the Downloads folder, but on the desktop it's
             // the regular one that VSCode installs. It's in .gitignore and shouldn't be deleted.
-            // "miDebuggerPath": "${workspaceFolder}/lldb-mi"
+            "miDebuggerPath": "${workspaceFolder}/lldb-mi"
         }
     ]
 }

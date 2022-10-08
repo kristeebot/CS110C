@@ -1,3 +1,5 @@
 .DS_Store
 *.dSYM
 Info.plist
+lldb-mi
+Module6/SortedListHasA/main
