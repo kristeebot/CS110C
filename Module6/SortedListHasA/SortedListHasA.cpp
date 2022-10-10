@@ -4,109 +4,116 @@
 /** Implementation file for the class SortedListHasA.
  @file SortedListHasA.cpp */
 
-#include "SortedListHasA.h"  // Header file
+#include "SortedListHasA.h" // Header file
 #include "LinkedList.h"
 #include <cassert>
 #include <cmath>
-  
-template<class ItemType>
+
+template <class ItemType>
 SortedListHasA<ItemType>::SortedListHasA()
 {
    listPtr = new LinkedList<ItemType>();
-}  // end default constructor
+} // end default constructor
 
-template<class ItemType>
-SortedListHasA<ItemType>::SortedListHasA(const SortedListHasA<ItemType>& sList) 
+template <class ItemType>
+SortedListHasA<ItemType>::SortedListHasA(const SortedListHasA<ItemType> &sList)
 {
-	// First, create our own list
-	listPtr = new LinkedList<ItemType>();
-	
-	// Then add items to it using public methods
-	for(int position = 1; position <= sList.getLength(); position++)
-	{
-		listPtr->insert(position, sList.getEntry(position));
-	}  // end for	
-}  // end copy constructor
+   // First, create our own list
+   listPtr = new LinkedList<ItemType>();
 
-template<class ItemType>
+   // Then add items to it using public methods
+   for (int position = 1; position <= sList.getLength(); position++)
+   {
+      listPtr->insert(position, sList.getEntry(position));
+   } // end for
+} // end copy constructor
+
+template <class ItemType>
 SortedListHasA<ItemType>::~SortedListHasA()
 {
    clear();
-}  // end destructor
+} // end destructor
 
-template<class ItemType>
-void SortedListHasA<ItemType>::insertSorted(const ItemType& newEntry)
+template <class ItemType>
+void SortedListHasA<ItemType>::insertSorted(const ItemType &newEntry)
 {
    int newPosition = fabs(getPosition(newEntry));
    listPtr->insert(newPosition, newEntry);
-}  // end insertSorted
+} // end insertSorted
 
-template<class ItemType>
-bool SortedListHasA<ItemType>::removeSorted(const ItemType& anEntry)
+template <class ItemType>
+bool SortedListHasA<ItemType>::removeSorted(const ItemType &anEntry)
 {
    bool ableToRemove = false;
    if (!isEmpty())
    {
       int position = getPosition(anEntry);
-             
+
       ableToRemove = position > 0;
       if (ableToRemove)
       {
          ableToRemove = listPtr->remove(position);
-      }  // end if
-   }  // end if
+      } // end if
+   }    // end if
 
    return ableToRemove;
-}  // end removeSorted
+} // end removeSorted
 
-template<class ItemType>
-int SortedListHasA<ItemType>::getPosition(const ItemType& anEntry) const
+template <class ItemType>
+int SortedListHasA<ItemType>::getPosition(const ItemType &anEntry) const
 {
-   // this version of getPosition always returns 1.  Fix it so that it implements
-   // getPosition() correctly.  It should return either the position of the given 
-   // entry, if it occurs in the sorted list, or the position where the entry 
-   // would occur, but as a negative integer.  
-   int position = 1;
 
-   return position;
-}  // end getPosition
+   for (int i = 1; i < listPtr->getLength(); i++)
+   {
+      ItemType currentItem = listPtr->getEntry(i);
+      if (currentItem == anEntry)
+      {
+         return i;
+      }
+      else if (currentItem > anEntry)
+      {
+         return -i;
+      }
+   }
+   return -(listPtr->getLength() + 1);
+  
+} // end getPosition
 
 //=====================
 // List operations:
 
-template<class ItemType>
+template <class ItemType>
 bool SortedListHasA<ItemType>::remove(int position)
 {
    return listPtr->remove(position);
-}  // end remove
+} // end remove
 
-template<class ItemType>
+template <class ItemType>
 void SortedListHasA<ItemType>::clear()
 {
    listPtr->clear();
-}  // end clear
+} // end clear
 
-template<class ItemType>
+template <class ItemType>
 ItemType SortedListHasA<ItemType>::getEntry(int position) const
 {
    return listPtr->getEntry(position);
-}  // end getEntry
+} // end getEntry
 
-template<class ItemType>
+template <class ItemType>
 bool SortedListHasA<ItemType>::isEmpty() const
 {
    return listPtr->isEmpty();
-}  // end isEmpty
+} // end isEmpty
 
-template<class ItemType>
+template <class ItemType>
 int SortedListHasA<ItemType>::getLength() const
 {
    return listPtr->getLength();
-}  // end getLength
+} // end getLength
 
 // End of implementation file.  To get this to compile on hills,
 // add definitions of template types we will use in this .cpp file.
 // (just strings for now, add more types if desired)
 template class SortedListHasA<std::string>;
 template class SortedListHasA<int>;
-
