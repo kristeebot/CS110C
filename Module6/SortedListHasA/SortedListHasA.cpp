@@ -63,7 +63,7 @@ template <class ItemType>
 int SortedListHasA<ItemType>::getPosition(const ItemType &anEntry) const
 {
 
-   for (int i = 1; i < listPtr->getLength(); i++)
+   for (int i = 1; i <= listPtr->getLength(); i++)
    {
       ItemType currentItem = listPtr->getEntry(i);
       if (currentItem == anEntry)
