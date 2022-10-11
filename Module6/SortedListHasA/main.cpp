@@ -3,6 +3,7 @@
 // CS110C
 // Prof Max Luttrel
 // Kristina Helwing
+//
 #include <iostream>
 #include <string>
 #include "SortedListHasA.h" // ADT sorted list operations
@@ -193,25 +194,28 @@ void displayScores(SortedListInterface<int> *listPtr)
 int main()
 {
    int currentScore = 0;
-   SortedListHasA<int> highScores;
-   while (currentScore >=0)
+   SortedListHasA<int> highScores(true);
+   while (currentScore >= 0)
    {
 
+      // copyConstructorTester();
 
-   // copyConstructorTester();
+      // SortedListInterface<int>* intList = new SortedListHasA<int>();
 
-   // SortedListInterface<int>* intList = new SortedListHasA<int>();
+      // SortedListInterface<string>* listPtr = new SortedListHasA<string>();
+      // cout << "Testing the Link-Based Sorted List:" << endl;
+      // sortedListTester(listPtr);
+      // cout << "======================================" << endl;
 
-   // SortedListInterface<string>* listPtr = new SortedListHasA<string>();
-   // cout << "Testing the Link-Based Sorted List:" << endl;
-   // sortedListTester(listPtr);
-   // cout << "======================================" << endl;
+      // cout << "\nTesting the List Operations:" << endl;
+      // listOpsTester(listPtr);
+      cout << "Enter the score: ";
+      cin >> currentScore;
 
-   // cout << "\nTesting the List Operations:" << endl;
-   // listOpsTester(listPtr);
-   cout << "Enter the score: ";
-   cin >> currentScore;
-   highScores.insertSorted(currentScore);
+      if (currentScore >= 0)
+      {
+         highScores.insertSorted(currentScore);
+      }
    }
    displayScores(&highScores);
    return 0;
