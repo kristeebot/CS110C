@@ -77,9 +77,26 @@ public:
         return true;
     }
 };
+string infixToPostfix(string input)
+{
+    return " ";
+}
+int calculatePostfix(string input)
+{
+    return 0;
+}
+int calculateInfix(string input)
+{
+    return calculatePostfix(infixToPostfix(input));
+}
 
 int main()
 {
-    cout << "hello world!" << endl;
+    char *input = "1+2*3";
+    int inputOneValue = calculateInfix(input);
+    char *inputTwo = "(1+2)*3";
+    int inputTwoValue = calculateInfix(inputTwo);
+    cout << "Calcuate: " << input << " = " << inputOneValue << " should be 7" << endl;
+    cout << "Calculate: " << inputTwo << " = " << inputTwoValue << " should be 9" << endl;
     return 0;
 }
