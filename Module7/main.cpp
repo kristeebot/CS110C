@@ -46,7 +46,7 @@ For up to 10% extra credit, improve your program to remove the assumption that t
 It should compute the result if the string is valid, and gracefully handle an invalid string, for example by outputting an error message.
 */
 
-int MAX_STACK = 100;
+const int MAX_STACK = 100;
 
 class Stack
 {

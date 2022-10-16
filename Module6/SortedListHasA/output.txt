@@ -1,0 +1,12 @@
+
+**SAMPLE OUTPUT***
+
+argv[0] = '/Users/kristinahelwing/CS110C/Module6/SortedListHasA/main'
+Enter the score: 77
+Enter the score: 88
+Enter the score: 66
+Enter the score: 55
+Enter the score: 99
+Enter the score: -1
+The sorted list contains 
+99 88 77 66 55 
