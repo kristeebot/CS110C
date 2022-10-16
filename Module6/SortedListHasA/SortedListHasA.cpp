@@ -1,5 +1,9 @@
 //  Created by Frank M. Carrano and Tim Henry.
 //  Copyright (c) 2013 __Pearson Education__. All rights reserved.
+// CS110C
+// Prof Max Luttrel
+// Kristina Helwing
+// 101022
 
 /** Implementation file for the class SortedListHasA.
  @file SortedListHasA.cpp */
@@ -10,9 +14,10 @@
 #include <cmath>
 
 template <class ItemType>
-SortedListHasA<ItemType>::SortedListHasA()
+SortedListHasA<ItemType>::SortedListHasA(bool descending)
 {
    listPtr = new LinkedList<ItemType>();
+   this->descending = descending;
 } // end default constructor
 
 template <class ItemType>
@@ -20,6 +25,7 @@ SortedListHasA<ItemType>::SortedListHasA(const SortedListHasA<ItemType> &sList)
 {
    // First, create our own list
    listPtr = new LinkedList<ItemType>();
+   this->descending = sList.descending;
 
    // Then add items to it using public methods
    for (int position = 1; position <= sList.getLength(); position++)
@@ -70,13 +76,13 @@ int SortedListHasA<ItemType>::getPosition(const ItemType &anEntry) const
       {
          return i;
       }
-      else if (currentItem > anEntry)
+      else if (descending ? currentItem < anEntry : currentItem > anEntry)
       {
          return -i;
       }
    }
    return -(listPtr->getLength() + 1);
-  
+
 } // end getPosition
 
 //=====================

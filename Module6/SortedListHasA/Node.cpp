@@ -1,5 +1,9 @@
 //  Created by Frank M. Carrano and Tim Henry.
 //  Copyright (c) 2013 __Pearson Education__. All rights reserved.
+// CS110C
+// Prof Max Luttrel
+// Kristina Helwing
+// 101022
 
 /** @file Node.cpp 
     Listing 4-2 */

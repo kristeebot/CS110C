@@ -1,5 +1,9 @@
 //  Created by Frank M. Carrano and Tim Henry.
 //  Copyright (c) 2013 __Pearson Education__. All rights reserved.
+// CS110C
+// Prof Max Luttrel
+// Kristina Helwing
+// 101022
 
 /** ADT sorted list using ADT list.
  Listing 12-3.
@@ -18,9 +22,10 @@ class SortedListHasA : public SortedListInterface<ItemType>
 {
 private:
    ListInterface<ItemType>* listPtr; 
+   bool descending;
 	
 public:
-   SortedListHasA();
+   SortedListHasA(bool descending = false);
    SortedListHasA(const SortedListHasA<ItemType>& sList);
    virtual ~SortedListHasA();
    

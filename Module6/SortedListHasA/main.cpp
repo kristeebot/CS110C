@@ -3,7 +3,7 @@
 // CS110C
 // Prof Max Luttrel
 // Kristina Helwing
-//
+// 101022
 #include <iostream>
 #include <string>
 #include "SortedListHasA.h" // ADT sorted list operations
