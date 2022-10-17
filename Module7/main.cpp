@@ -82,20 +82,45 @@ public:
         return true;
     }
 };
+
+bool isOp(char c)
+{
+    return (c == '+' || c == '-' || c == '/' || c == '*');
+}
+
+int charToInt(char c)
+{
+    return c - '0';
+}
+
 string infixToPostfix(string input)
 {
     return " ";
 }
+
 int calculatePostfix(string input)
 {
     Stack myStack;
+    int result = 0;
     for (int i = 0; i < input.size(); i++)
     {
         char token = input[i];
-        myStack.push(token);
+        if (isOp(token))
+        {
+            int valueTwo = myStack.peek();
+            myStack.pop();
+            int valueOne = myStack.peek();
+            myStack.pop();
+//write a function that does the math
+        }
+        else
+        {
+            myStack.push(charToInt(token));
+        }
     }
-    return 0;
+    return result;
 }
+
 int calculateInfix(string input)
 {
     return calculatePostfix(infixToPostfix(input));
