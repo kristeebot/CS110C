@@ -55,8 +55,13 @@ private:
     int top;
 
 public:
+    Stack()
+    {
+        top = 0;
+    }
     void push(char value)
     {
+        cout << "pushing value: " << value << endl;
         stack[top++] = value;
     }
     char peek()
@@ -83,6 +88,12 @@ string infixToPostfix(string input)
 }
 int calculatePostfix(string input)
 {
+    Stack myStack;
+    for (int i = 0; i < input.size(); i++)
+    {
+        char token = input[i];
+        myStack.push(token);
+    }
     return 0;
 }
 int calculateInfix(string input)
@@ -92,9 +103,11 @@ int calculateInfix(string input)
 
 int main()
 {
-    char *input = "1+2*3";
+    string input = "1+2*3";
+    cout << "infix to post fix: " << infixToPostfix(input) << endl;
+    cout << "calculate post fix: " << calculatePostfix("34+") << endl;
     int inputOneValue = calculateInfix(input);
-    char *inputTwo = "(1+2)*3";
+    string inputTwo = "(1+2)*3";
     int inputTwoValue = calculateInfix(inputTwo);
     cout << "Calcuate: " << input << " = " << inputOneValue << " should be 7" << endl;
     cout << "Calculate: " << inputTwo << " = " << inputTwoValue << " should be 9" << endl;
