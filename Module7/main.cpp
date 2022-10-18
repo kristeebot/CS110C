@@ -97,6 +97,27 @@ string infixToPostfix(string input)
 {
     return " ";
 }
+int performOperator(int valueOne, int valueTwo, char oP)
+{
+    if (oP == '+')
+    {
+        return valueOne + valueTwo;
+    }
+    if (oP == "-")
+    {
+        return valueOne - valueTwo;
+    }
+    if (oP == '/')
+    {
+        return valueOne / valueTwo;
+    }
+    if (oP == '*')
+    {
+        return valueOne * valueTwo;
+    }
+    cerr << "unkown operator: " << oP;
+    exit(-1);
+}
 
 int calculatePostfix(string input)
 {
@@ -111,7 +132,7 @@ int calculatePostfix(string input)
             myStack.pop();
             int valueOne = myStack.peek();
             myStack.pop();
-//write a function that does the math
+            // write a function that does the math
         }
         else
         {
