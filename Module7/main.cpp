@@ -144,13 +144,30 @@ string infixToPostfix(string input)
         if (isOp(token))
         {
             // 1. if the stack is empty, push it onto the stack
-
+            if (myStack.isEmpty())
+            {
+                myStack.push(token);
+            }
             // 2. else, peek at the stack. if it is an operator of greater or
             // equal precedence, pop it from the stack and append it to
             // postfixExp. keep peeking/popping until you encounter
             // either a "(" or an operator of lower precedence, or the
             // stack becomes empty. then, push the operator onto the
             // stack
+            else
+            {
+                char c = myStack.peek();
+                while (!isLeftParen(c) && getPrecedence(c) >= getPrecedence(token) && !myStack.isEmpty())
+                {
+                    output.push_back(c);
+                    myStack.pop();
+                    if (!myStack.isEmpty())
+                    {
+                        c = myStack.peek();
+                    }
+                }
+                myStack.push(token);
+            }
         }
         // 4. if you encounter a ")", pop operators off the stack and append
         // them to postfixExp until you encounter the "(". pop off the
@@ -162,8 +179,11 @@ string infixToPostfix(string input)
             {
                 output.push_back(c);
                 myStack.pop();
-                c = myStack.peek();
-            } while (!isLeftParen(c));
+                if (!myStack.isEmpty())
+                {
+                    c = myStack.peek();
+                }
+            } while (!isLeftParen(c) && !myStack.isEmpty());
             if (isLeftParen(c))
             {
                 myStack.pop();
@@ -173,6 +193,12 @@ string infixToPostfix(string input)
 
     // 5. if you encounter the end of the string, pop off remaining stack
     // operators and append them to postfixExp
+    while (!myStack.isEmpty())
+    {
+        char c = myStack.peek();
+        output.push_back(c);
+        myStack.pop();
+    }
     return output;
 }
 // do the math
