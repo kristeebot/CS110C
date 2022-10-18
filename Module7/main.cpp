@@ -61,12 +61,17 @@ public:
     }
     void push(char value)
     {
-        cout << "pushing value: " << value << endl;
+        // cout << "pushing value: " << value << endl;
         stack[top++] = value;
     }
     char peek()
     {
-        return stack[top];
+        if (isEmpty())
+        {
+            cerr << "cannot peek into an empty stack" << endl;
+            exit(-1);
+        }
+        return stack[top - 1];
     }
     bool isEmpty()
     {
@@ -93,17 +98,91 @@ int charToInt(char c)
     return c - '0';
 }
 
+int getPrecedence(char c)
+{
+    if (c == '+' || c == '-')
+    {
+        return 1;
+    }
+    else if (c == '*' || c == '/')
+    {
+        return 2;
+    }
+    return 0;
+}
+bool isLeftParen(char c)
+{
+    return c == '(';
+}
+bool isRightParen(char c)
+{
+    return c == ')';
+}
+bool isOperand(char c)
+{
+    return !isOp(c) && !isLeftParen(c) && !isRightParen(c);
+}
 string infixToPostfix(string input)
 {
-    return " ";
+    Stack myStack;
+    string output;
+    for (int i = 0; i < input.size(); i++)
+    {
+        char token = input[i];
+        // 1. if you encounter an operand, append it to the output string
+        if (isOperand(token))
+        {
+            output.push_back(token);
+        }
+        // 2. if you encounter a "(", push it onto the stack
+        if (isLeftParen(token))
+        {
+            myStack.push(token);
+        }
+        // 3. if you encounter an operator:
+
+        if (isOp(token))
+        {
+            // 1. if the stack is empty, push it onto the stack
+
+            // 2. else, peek at the stack. if it is an operator of greater or
+            // equal precedence, pop it from the stack and append it to
+            // postfixExp. keep peeking/popping until you encounter
+            // either a "(" or an operator of lower precedence, or the
+            // stack becomes empty. then, push the operator onto the
+            // stack
+        }
+        // 4. if you encounter a ")", pop operators off the stack and append
+        // them to postfixExp until you encounter the "(". pop off the
+        // "("
+        if (isRightParen(token))
+        {
+            char c = myStack.peek();
+            do
+            {
+                output.push_back(c);
+                myStack.pop();
+                c = myStack.peek();
+            } while (!isLeftParen(c));
+            if (isLeftParen(c))
+            {
+                myStack.pop();
+            }
+        }
+    }
+
+    // 5. if you encounter the end of the string, pop off remaining stack
+    // operators and append them to postfixExp
+    return output;
 }
+// do the math
 int performOperator(int valueOne, int valueTwo, char oP)
 {
     if (oP == '+')
     {
         return valueOne + valueTwo;
     }
-    if (oP == "-")
+    if (oP == '-')
     {
         return valueOne - valueTwo;
     }
@@ -132,14 +211,15 @@ int calculatePostfix(string input)
             myStack.pop();
             int valueOne = myStack.peek();
             myStack.pop();
-            // write a function that does the math
+            // call a function that does the math
+            myStack.push(performOperator(valueOne, valueTwo, token));
         }
         else
         {
             myStack.push(charToInt(token));
         }
     }
-    return result;
+    return myStack.peek();
 }
 
 int calculateInfix(string input)
