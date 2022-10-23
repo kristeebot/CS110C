@@ -1,50 +1,11 @@
-// CS110C PROF MAX LUTTREL
+// CS110C PROF MAX LUTTRELL
 // KRISTINA HELWING
-// 101522
+// 101722
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
 using namespace std;
-
-/*For this assignment, implement a simple stack calculator which can compute an infix expression.
-It should take in a string containing an infix expression, compute the result, and print it out.  It should handle operators +, -, *, / and parenthesis.
-
-Your program must have two main steps -- first convert the infix expression to postfix, and then compute the result using the algorithms discussed in videos/pdfs and textbook.
-These algorithms require that you use a stack.  You must implement your own stack, you may not use a library that implements a stack.
-No credit will be given if you don't implement your own stack.
-
-Although your textbook contains implementations of a stack, I encourage you to try and implement your own stack, using the textbook as a reference only if you need it.
-You can keep your stack simple -- e.g. it doesn’t need to be templated, it can just hold a simple data type like char.
-Additionally, it doesn’t need to handle error conditions because we are guaranteed a string containing a syntactically correct infix expression.
-You may implement either an array-based stack or a link-based stack.
-
-Assumptions
-To keep things simple, you may make the following assumptions:
-
-there are no spaces or other whitespace in the string
-all the operands are single digits
-the result of every operation is a single digit.  For example, 2+3 is allowed because the result is 5.
-5*3 is not allowed because the result is 15, which is two digits.
- 5+3+4 is not allowed because even though the first operation is 8, a single digit, the result of the second operation is 12, two digits.
- 5+3-4 is allowed because the result of the first operation is 8, and the result of the second operation is 4
-any string entered contains a valid, syntactically correct infix expression.  If there are parenthesis in the expression, they are balanced.
-Conversion between int and char
-The expression contains both char and int data, because each operator is a char and each operand is a digit.
-The easiest way to handle this is to implement a stack which supports char data.
- Since we know all our operands are single digits, we can simply push the character representing the digit onto the stack.
- Note this character will be the ASCII value of the character, not the integer value!
-  As an example, the character '7' is ASCII value 55, '8' is 56, etc.  If you need the actual integer value of the character, in this case 7, there is a convenient way to determine it.
-  You can subtract the ASCII value of zero, '0' from the character.  For example, the following code will store 7 in i:
-
-  char c = '7';
-  int i = c - '0';
-To get the character back, you can add '0' to an integer.
-
-Extra Credit
-For up to 10% extra credit, improve your program to remove the assumption that the string contains a valid, syntactically correct infix expression.
-It should compute the result if the string is valid, and gracefully handle an invalid string, for example by outputting an error message.
-*/
 
 const int MAX_STACK = 100;
 
@@ -152,8 +113,7 @@ string infixToPostfix(string input)
             // equal precedence, pop it from the stack and append it to
             // postfixExp. keep peeking/popping until you encounter
             // either a "(" or an operator of lower precedence, or the
-            // stack becomes empty. then, push the operator onto the
-            // stack
+            // stack becomes empty. then, push the operator onto the stack
             else
             {
                 char c = myStack.peek();
@@ -170,8 +130,7 @@ string infixToPostfix(string input)
             }
         }
         // 4. if you encounter a ")", pop operators off the stack and append
-        // them to postfixExp until you encounter the "(". pop off the
-        // "("
+        // them to postfixExp until you encounter the "(". pop off the "("
         if (isRightParen(token))
         {
             char c = myStack.peek();
@@ -188,6 +147,11 @@ string infixToPostfix(string input)
             {
                 myStack.pop();
             }
+            else
+            {
+                cerr << "No matching left paren " << endl;
+                exit(-1);
+            }
         }
     }
 
@@ -196,6 +160,11 @@ string infixToPostfix(string input)
     while (!myStack.isEmpty())
     {
         char c = myStack.peek();
+        if (isLeftParen(c) || isRightParen(c))
+        {
+            cerr<<"mismatched parens" <<endl;
+            exit (-1);
+        }
         output.push_back(c);
         myStack.pop();
     }
@@ -263,5 +232,25 @@ int main()
     int inputTwoValue = calculateInfix(inputTwo);
     cout << "Calcuate: " << input << " = " << inputOneValue << " should be 7" << endl;
     cout << "Calculate: " << inputTwo << " = " << inputTwoValue << " should be 9" << endl;
+    // Extra Credit
+    // For up to 10% extra credit, improve your program to remove the assumption that the string contains a valid, syntactically correct infix expression.
+    // It should compute the result if the string is valid, and gracefully handle an invalid string, for example by outputting an error message.
+    // Here is some bad input handling:
+    cout << "infix to post fix: " << infixToPostfix("123") << endl;    // no operators
+    //cout << "infix to post fix: " << infixToPostfix("(1+2*3") << endl; // mismatched paren commented out to test other error case
+    cout << "infix to post fix: " << infixToPostfix("1+2*3)") << endl; // mismatched paren
+
     return 0;
 }
+/*SAMPLE OUTPUT
+1 arguments:
+argv[0] = '/Users/kristinahelwing/CS110C/Module7/main'
+infix to post fix: 123*+
+calculate post fix: 7
+Calcuate: 1+2*3 = 7 should be 7
+Calculate: (1+2)*3 = 9 should be 9
+infix to post fix: 123
+infix to post fix: No matching left paren 
+Process exited with status 255
+logout
+*/
