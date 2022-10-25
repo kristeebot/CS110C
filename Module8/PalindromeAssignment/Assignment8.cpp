@@ -3,23 +3,6 @@
 // AssignmentEight
 // This assigment determines if a string is a palindrome
 
-// You will need to implement your own queue class which supports the queue operations discussed in class and the textbook.
-// As with assignment 7, you don’t need to make a templated class -- a simple implementation which deals with char data will suffice.
-// I encourage you to implement your own class, only using the code in your textbook as a reference if needed.
-// You may implement either an array-based or a link-based queue (unless you’re going for the extra credit, see below).
-
-// Once you have your queue class implemented,
-// you can create a function which has a loop which pushes each character onto the stack and enqueues each character onto the queue one by one.
-// You can then pop characters from the stack and dequeue characters from the queue one by one -- if the string is a palindrome, they’re all equal!
-
-// Extra Credit
-// We discussed an array-based implementation that uses no special data member,
-// such as a count of items in the queue or a boolean isFull, to track whether or not the queue is full.
-// Rather, it uses an array of MAX_QUEUE+1 entries but only uses MAX_QUEUE of them for queue items.
-// You sacrifice one array location by making front the index of the location before the actual front of the queue.
-// Thus, the queue is full if front equals (back+1) % (MAX_QUEUE+1) but the queue is empty if front equals back.
-// For up to 10% extra credit, implement your queue using this approach.
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
@@ -27,7 +10,7 @@ using namespace std;
 
 const int MAX_STACK = 100;
 
-// You should be able use your stack class from Assignment 7 without modification.
+// Stack class from Assignment 7 without modification.
 class Stack
 {
 private:
@@ -41,7 +24,6 @@ public:
     }
     void push(char value)
     {
-        // cout << "pushing value: " << value << endl;
         stack[top++] = value;
     }
     char peek()
@@ -132,13 +114,13 @@ bool isPalindrome(string stringInput)
     Stack myStack; // a new empty stack
     Queue myQueue; // a new empty queue
 
-    // Once you have your queue class implemented, you can create a function which has a loop which pushes each character onto the stack and enqueues each character onto the queue one by one.
-    // You can then pop characters from the stack and dequeue characters from the queue one by one -- if the string is a palindrome, they’re all equal!
-    // Add each character of the string to both the queue and the stack
+    // A function which has a loop which pushes each character onto the stack and enqueues each character onto the queue one by one.
+    // Pop characters from the stack and dequeue characters from the queue one by one -- if the string is a palindrome, they’re all equal!
+    // Adding each character of the string to both the queue and the stack
 
     for (int i = 0; i < stringInput.size(); i++)
     {
-        char nextChar = stringInput[i]; 
+        char nextChar = stringInput[i];
         myQueue.enqueue(nextChar);
         myStack.push(nextChar);
     }
@@ -154,32 +136,20 @@ bool isPalindrome(string stringInput)
         myQueue.dequeue();
     }
     return true;
-    /* // compare the queue characters with the stack characters
-     charactersAreEqual = true
-     while (aQueue is not empty and charactersAreEqual)
-     {
-         queueFront = aQueue.peekFront()
-         stackTop = aStack.peek()
-         if (queueFront == stackTop)
-         {
-             aQueue.dequeue()
-             aStack.pop()
-         }
-         else
-             charachtersAreEqual = false
-     }
-     return charactersAreEqual
-
-
-     return false;
-     */
 }
 
 int main()
 {
-    cout << "racecar: " << isPalindrome("racecar") << "should be true" << endl;
-    cout << "taco: " << isPalindrome("taco") << "Should be false" << endl;
+    cout << "Checking for palindromes" << endl;
+    cout << "racecar: " << isPalindrome("racecar") << " should be TRUE" << endl;
+    cout << "taco: " << isPalindrome("taco") << " should be FALSE" << endl;
     return 0;
 }
-// For this assignment, implement the algorithm discussed in the textbook section 13.2.2
-// which uses a queue and a stack to determine if a string S is a palindrome.
+
+// Extra Credit
+// We discussed an array-based implementation that uses no special data member,
+// such as a count of items in the queue or a boolean isFull, to track whether or not the queue is full.
+// Rather, it uses an array of MAX_QUEUE+1 entries but only uses MAX_QUEUE of them for queue items.
+// You sacrifice one array location by making front the index of the location before the actual front of the queue.
+// Thus, the queue is full if front equals (back+1) % (MAX_QUEUE+1) but the queue is empty if front equals back.
+// For up to 10% extra credit, implement your queue using this approach.

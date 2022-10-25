@@ -6,11 +6,9 @@ using namespace std;
 
 // Implement a circular array-based queue of char entries in C++ based on the class definition below.
 // enqueue/dequeue should use member variable count to return false if the queue is full/empty, respectively.
-
 // Once you have implemented all four member functions of the Queue class,
 
-// global const for maximum queue entries
-
+// Global const for maximum queue entries
 const int MAX_QUEUE = 3;
 
 // a queue of chars
@@ -98,18 +96,8 @@ int main()
     myQueue.dequeue();
     check(myQueue.peek() == 'c', "should be c");
     myQueue.dequeue();
-
     check(myQueue.isEmpty(), "should be empty");
     // You should test your dequeue function to make sure it returns false if you try to dequeue when the queue is empty.
-
     check(!myQueue.dequeue(), "should return false if dequeuing while empty");
-    //  "CIRCULAR ARRAY"
-    // both empty and full conditions have front one slot
-    // in front of back! three solutions:
-    // • maintain a count of items
-    // • have a bool "isFull" and set it to true when queue is full
-    // • use an array with size MAX_QUEUE+1, but only
-    // use MAX_QUEUE elements at any given time
-    // array-based queue
     return 0;
 }
