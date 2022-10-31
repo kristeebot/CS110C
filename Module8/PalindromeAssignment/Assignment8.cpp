@@ -6,9 +6,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
+#include <stdexcept>
 using namespace std;
 
-const int MAX_STACK = 100;
+const int MAX_STACK = 10;
 
 // Stack class from Assignment 7 without modification.
 class Stack
@@ -49,44 +50,46 @@ public:
         return true;
     }
 };
-const int MAX_QUEUE = 100;
+const int MAX_QUEUE = 10;
 // a queue of chars
 class Queue
 {
 private:
     // an array to hold queue entries
-    char entries[MAX_QUEUE];
+    char entries[MAX_QUEUE + 1];
     // properties to hold current front,
     // back, and count
     int front;
     int back;
-    int count;
 
 public:
     Queue()
     {
+        back = MAX_QUEUE;
         front = 0;
-        back = MAX_QUEUE - 1;
-        count = 0;
+        memset(entries, 0, MAX_QUEUE + 1);
     };
     bool enqueue(char newEntry);
     bool dequeue();
     char peek();
     bool isEmpty()
     {
-        return count == 0;
+        return front == back;
+    }
+    bool isFull()
+    {
+        return front == ((back + 1) % MAX_QUEUE); // extra credit
     }
 };
 
 bool Queue::enqueue(char newEntry)
 {
-    if (count >= MAX_QUEUE)
+    if (isFull())
     {
         return false;
     }
     back = (back + 1) % MAX_QUEUE;
     entries[back] = newEntry;
-    count++;
     return true;
 }
 bool Queue::dequeue()
@@ -96,7 +99,6 @@ bool Queue::dequeue()
         return false;
     }
     front = (front + 1) % MAX_QUEUE;
-    count--;
     return true;
 }
 char Queue::peek()
@@ -106,11 +108,16 @@ char Queue::peek()
         cerr << "peeking at an empty array" << endl;
         exit(-1);
     }
-    return entries[front];
+    return entries[front + 1];
 }
 
 bool isPalindrome(string stringInput)
 {
+    int length = stringInput.size();
+    if (length > MAX_QUEUE || length > MAX_STACK)
+    {
+        throw length_error("String exceeds queue size");
+    }
     Stack myStack; // a new empty stack
     Queue myQueue; // a new empty queue
 
@@ -118,10 +125,13 @@ bool isPalindrome(string stringInput)
     // Pop characters from the stack and dequeue characters from the queue one by one -- if the string is a palindrome, they’re all equal!
     // Adding each character of the string to both the queue and the stack
 
-    for (int i = 0; i < stringInput.size(); i++)
+    for (int i = 0; i < length; i++)
     {
         char nextChar = stringInput[i];
-        myQueue.enqueue(nextChar);
+        if (!myQueue.enqueue(nextChar))
+        {
+            throw range_error("Could not enqueue");
+        }
         myStack.push(nextChar);
     }
     while (!myStack.isEmpty())
@@ -143,13 +153,24 @@ int main()
     cout << "Checking for palindromes" << endl;
     cout << "racecar: " << isPalindrome("racecar") << " should be TRUE" << endl;
     cout << "taco: " << isPalindrome("taco") << " should be FALSE" << endl;
+    try
+    {
+        cout << "tattarrattat: " << isPalindrome("tattarrattat") << " should be TRUE" << endl;
+    }
+    catch (length_error e)
+    {
+        cerr << "Length error: " << e.what() << endl;
+    }
+    cout << "burritto: " << isPalindrome("Burritto") << " should be FALSE" << endl;
     return 0;
 }
 
-// Extra Credit
-// We discussed an array-based implementation that uses no special data member,
-// such as a count of items in the queue or a boolean isFull, to track whether or not the queue is full.
-// Rather, it uses an array of MAX_QUEUE+1 entries but only uses MAX_QUEUE of them for queue items.
-// You sacrifice one array location by making front the index of the location before the actual front of the queue.
-// Thus, the queue is full if front equals (back+1) % (MAX_QUEUE+1) but the queue is empty if front equals back.
-// For up to 10% extra credit, implement your queue using this approach.
+/*SAMPLE OUTPUT
+Checking for palindromes
+racecar: 1 should be TRUE
+taco: 0 should be FALSE
+tattarrattat: Length error: String exceeds queue size
+burritto: 0 should be FALSE
+Process exited with status 0
+logout
+*/

@@ -32,7 +32,13 @@
         "streambuf": "cpp",
         "string": "cpp",
         "cstdlib": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "__split_buffer": "cpp",
+        "array": "cpp",
+        "string_view": "cpp",
+        "exception": "cpp",
+        "__config": "cpp",
+        "stdexcept": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
