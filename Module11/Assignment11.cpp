@@ -8,12 +8,7 @@
 #include <algorithm>
 using namespace std;
 
-/*
-For up to 10 points extra credit, instead of using the hack, make your own class Patient to contain patient information.
-You’ll need to have two member variables for priority and name, overload the < and > operators, and have a way to print out the patient’s name.
-You can then make your heap an array of objects of your Patient class instead of an array of strings.
-You'll also need to adjust the sample main() above to work with objects of your Patient class.
-*/
+/* EXTRA CREDIT */
 class Patient
 {
 public:
@@ -58,6 +53,12 @@ private:
     {
         return index * 2 + 2;
     }
+    void swapItems(int leftIndex, int rightIndex)
+    {
+        ItemType item = items[rightIndex];
+        items[rightIndex] = items[leftIndex];
+        items[leftIndex] = item;
+    }
 
 public:
     bool add(ItemType item);
@@ -101,50 +102,29 @@ void Heap<ItemType>::heapifyDown(int rootIndex)
     {
         return;
     }
-    // The root must have a left child; assume it is the larger child
+
     int largerChildIndex = getLeftIndex(rootIndex);
     int rightIndex = getRightIndex(rootIndex);
 
-    // now see if there is a right child which is larger than left child
     if (rightIndex < items.size())
     {
-        // There's a right child, but is the right child bigger?
+
         if (items[rightIndex] > items[largerChildIndex])
         {
             largerChildIndex = rightIndex;
         }
     }
-    // If item in root is smaller than item in larger child, swap items
+
     if (items[rootIndex] < items[largerChildIndex])
     {
-        iter_swap(items.begin() + rootIndex, items.begin() + largerChildIndex);
+        swapItems(rootIndex, largerChildIndex);
     }
 
     // Transform the semiheap rooted at largerChildIndex into a heap
     heapifyDown(largerChildIndex);
-
-    //     heapRebuild (rootIndex: integer, items: ArrayType, itemCount:integer)
-    // if (the root is not a leaf)
-    // {
-    // // The root must have a left child; assume it is the larger child
-    // largerChildIndex = 2 * rootIndex + 1 // Left child index
-    // // now see if there is a right child which is larger than left child
-    // if (the root has a right child)
-    // {
-    // rightChildIndex = 2 * rootIndex + 2 // Right child index
-    // if (items[rightChildIndex] > items[largerChildIndex])
-    // largerChildIndex = rightChildIndex // Larger child index
-    // }
-    // // If item in root is smaller than item in larger child, swap items
-    // if (items[rootIndex] < items[largerChildIndex])
-    // {
-    // Swap items[rootIndex] and items[largerChildIndex]
-    // // Transform the semiheap rooted at largerChildIndex into a heap
-    // heapRebuild (largerChildIndex, items, itemCount)
-    // }
-    // }
     // else root is a leaf, so we are done
 }
+
 template <class ItemType>
 void Heap<ItemType>::heapify()
 {
@@ -164,7 +144,7 @@ void Heap<ItemType>::heapify()
         }
         else
         {
-            std::iter_swap(items.begin() + newDataIndex, items.begin() + parentIndex);
+            swapItems(newDataIndex, parentIndex);
             newDataIndex = parentIndex;
         }
     }
@@ -224,6 +204,8 @@ int main()
     cout << ER.peekTop() << " will now see the doctor.\n";
     ER.remove();
     ER.print();
+    // Printing out the rest of the heap so I can make
+    // sure that items are returned in priority order
     while (!ER.isEmpty())
     {
         cout << ER.peekTop() << " will now see the doctor.\n";
@@ -231,3 +213,20 @@ int main()
     }
     return 0;
 }
+ /* SAMPLE OUTPUT
+Mary: 9 will now see the doctor.
+Stacy: 7 will now see the doctor.
+Jennifer: 6 will now see the doctor.
+Bob: 5 will now see the doctor.
+Chang: 5
+Paul: 4
+Julio: 3
+Max: 1
+Reiko: 2
+Chang: 5 will now see the doctor.
+Paul: 4 will now see the doctor.
+Julio: 3 will now see the doctor.
+Reiko: 2 will now see the doctor.
+Max: 1 will now see the doctor.
+Process exited with status 0
+ */
