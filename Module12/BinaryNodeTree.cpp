@@ -332,11 +332,17 @@ void BinaryNodeTree<ItemType>::setRootData(const ItemType &newItem)
 } // end setRootData
 
 template <class ItemType>
+BinaryNode<ItemType> *BinaryNodeTree<ItemType>::binaryAdd(BinaryNode<ItemType> *subTreePtr,
+                                                          BinaryNode<ItemType> *newNodePtr) {
+   cout << "TODO should be using binary node comparison rules to add newNodePtr" << endl;
+   return subTreePtr;
+} // end add
+
+template <class ItemType>
 bool BinaryNodeTree<ItemType>::add(const ItemType &newData)
 {
    BinaryNode<ItemType> *newNodePtr = new BinaryNode<ItemType>(newData);
-   // rootPtr = balancedAdd(rootPtr, newNodePtr);
-   rootPtr = randomAdd(rootPtr, newNodePtr);
+   rootPtr = binaryAdd(rootPtr, newNodePtr);
    return true;
 } // end add
 

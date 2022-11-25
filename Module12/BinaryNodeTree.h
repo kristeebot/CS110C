@@ -34,6 +34,11 @@ protected:
    BinaryNode<ItemType> *randomAdd(BinaryNode<ItemType> *subTreePtr,
                                      BinaryNode<ItemType> *newNodePtr);
 
+   // Adds newNodePtr in such a way as to maintain this tree as a
+   // binary search tree.
+   BinaryNode<ItemType> *binaryAdd(BinaryNode<ItemType> *subTreePtr,
+                                   BinaryNode<ItemType> *newNodePtr);
+
    // Recursively adds a new node to the tree in a left/right fashion to
    // keep the tree balanced.
    BinaryNode<ItemType> *balancedAdd(BinaryNode<ItemType> *subTreePtr,
