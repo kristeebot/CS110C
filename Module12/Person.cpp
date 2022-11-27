@@ -45,12 +45,12 @@ bool operator==(const PersonItem &lhs, const PersonItem &rhs)
 }
 bool operator<(const PersonItem &p1, const PersonItem &p2)
 {
-    return p1.key.compare(p2.key) == -1;
+    return p1.key.compare(p2.key) < 0;
 }
 
 bool operator>(const PersonItem &p1, const PersonItem &p2)
 {
-    return p1.key.compare(p2.key) == 1;
+    return p1.key.compare(p2.key) > 0;
 }
 
 bool operator<=(const PersonItem &p1, const PersonItem &p2)

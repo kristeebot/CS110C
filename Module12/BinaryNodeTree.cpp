@@ -160,6 +160,32 @@ BinaryNode<ItemType> *BinaryNodeTree<ItemType>::removeValue(BinaryNode<ItemType>
 } // end removeValue
 
 template <class ItemType>
+BinaryNode<ItemType> *BinaryNodeTree<ItemType>::binaryFindNode(BinaryNode<ItemType> *treePtr,
+                                                               const ItemType &target,
+                                                               bool &success) const
+{
+   ++nCount;
+   if (treePtr == nullptr)
+   {
+      return nullptr;
+   }
+   else if (treePtr->getItem() == target)
+   {
+      success = true;
+      return treePtr;
+   }
+   else if(treePtr->getItem()> target)
+   {
+      return binaryFindNode(treePtr->getLeftChildPtr(), target, success);
+   }
+   else
+   {
+      return binaryFindNode(treePtr->getRightChildPtr(), target, success);
+   }
+   return nullptr;
+}
+
+template <class ItemType>
 BinaryNode<ItemType> *BinaryNodeTree<ItemType>::findNode(BinaryNode<ItemType> *treePtr,
                                                          const ItemType &target,
                                                          bool &success) const
@@ -338,21 +364,20 @@ BinaryNode<ItemType> *BinaryNodeTree<ItemType>::binaryAdd(BinaryNode<ItemType> *
    // TODO COMAPRE LEFT TO RIGHT
    // Inserts a new item into the binary search tree to which subTreePtr points
    // Search the tree pointed to by subTreePtr for the item in the node pointed to by newNodePtr
-
+   ++nCount;
    if (subTreePtr == nullptr)
    {
       return newNodePtr;
    }
    else if (subTreePtr->getItem() < newNodePtr->getItem())
    {
-      BinaryNode<ItemType>* tmpPtr = binaryAdd(subTreePtr->getLeftChildPtr(), newNodePtr);
-      subTreePtr->setLeftChildPtr(tmpPtr);
+      BinaryNode<ItemType> *tmpPtr = binaryAdd(subTreePtr->getRightChildPtr(), newNodePtr);
+      subTreePtr->setRightChildPtr(tmpPtr);
    }
    else
    {
-      BinaryNode<ItemType>* tmpPtr = binaryAdd(subTreePtr->getRightChildPtr(), newNodePtr);
-      subTreePtr->setRightChildPtr(tmpPtr);
-
+      BinaryNode<ItemType> *tmpPtr = binaryAdd(subTreePtr->getLeftChildPtr(), newNodePtr);
+      subTreePtr->setLeftChildPtr(tmpPtr);
    } // end if
    return subTreePtr;
 } // end add
@@ -360,8 +385,10 @@ BinaryNode<ItemType> *BinaryNodeTree<ItemType>::binaryAdd(BinaryNode<ItemType> *
 template <class ItemType>
 bool BinaryNodeTree<ItemType>::add(const ItemType &newData)
 {
+   nCount = 0;
    BinaryNode<ItemType> *newNodePtr = new BinaryNode<ItemType>(newData);
    rootPtr = binaryAdd(rootPtr, newNodePtr);
+   cout << "Added with " << nCount << " comparisons" << endl;
    return true;
 } // end add
 
@@ -376,9 +403,11 @@ bool BinaryNodeTree<ItemType>::remove(const ItemType &target)
 template <class ItemType>
 ItemType BinaryNodeTree<ItemType>::getEntry(const ItemType &anEntry) const
 {
+   nCount = 0;
    bool isSuccessful = false;
-   BinaryNode<ItemType> *binaryNodePtr = findNode(rootPtr, anEntry, isSuccessful);
+   BinaryNode<ItemType> *binaryNodePtr = binaryFindNode(rootPtr, anEntry, isSuccessful);
 
+   cout << "searched with " << nCount << " recursions" << endl;
    if (isSuccessful)
       return binaryNodePtr->getItem();
    else

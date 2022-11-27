@@ -18,7 +18,10 @@ class BinaryNodeTree : public BinaryTreeInterface<ItemType>
 {
 private:
    BinaryNode<ItemType> *rootPtr;
+   // Count comparisons
+   mutable int nCount;
 
+ 
 protected:
    //------------------------------------------------------------
    // Protected Utility Methods Section:
@@ -32,7 +35,7 @@ protected:
    // Randomly adds a new node to the tree in a left/right fashion to
    // keep the tree balanced.
    BinaryNode<ItemType> *randomAdd(BinaryNode<ItemType> *subTreePtr,
-                                     BinaryNode<ItemType> *newNodePtr);
+                                   BinaryNode<ItemType> *newNodePtr);
 
    // Adds newNodePtr in such a way as to maintain this tree as a
    // binary search tree.
@@ -54,6 +57,9 @@ protected:
    // stored in the parent.
    BinaryNode<ItemType> *moveValuesUpTree(BinaryNode<ItemType> *subTreePtr);
 
+   BinaryNode<ItemType> *binaryFindNode(BinaryNode<ItemType> *treePtr,
+                                        const ItemType &target,
+                                        bool &success) const;
    // Recursively searches for target value in the tree by using a
    // preorder traversal.
    BinaryNode<ItemType> *findNode(BinaryNode<ItemType> *treePtr,
