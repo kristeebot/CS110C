@@ -333,8 +333,27 @@ void BinaryNodeTree<ItemType>::setRootData(const ItemType &newItem)
 
 template <class ItemType>
 BinaryNode<ItemType> *BinaryNodeTree<ItemType>::binaryAdd(BinaryNode<ItemType> *subTreePtr,
-                                                          BinaryNode<ItemType> *newNodePtr) {
-   cout << "TODO should be using binary node comparison rules to add newNodePtr" << endl;
+                                                          BinaryNode<ItemType> *newNodePtr)
+{
+   // TODO COMAPRE LEFT TO RIGHT
+   // Inserts a new item into the binary search tree to which subTreePtr points
+   // Search the tree pointed to by subTreePtr for the item in the node pointed to by newNodePtr
+
+   if (subTreePtr == nullptr)
+   {
+      return newNodePtr;
+   }
+   else if (subTreePtr->getItem() < newNodePtr->getItem())
+   {
+      BinaryNode<ItemType>* tmpPtr = binaryAdd(subTreePtr->getLeftChildPtr(), newNodePtr);
+      subTreePtr->setLeftChildPtr(tmpPtr);
+   }
+   else
+   {
+      BinaryNode<ItemType>* tmpPtr = binaryAdd(subTreePtr->getRightChildPtr(), newNodePtr);
+      subTreePtr->setRightChildPtr(tmpPtr);
+
+   } // end if
    return subTreePtr;
 } // end add
 

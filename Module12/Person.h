@@ -41,5 +41,9 @@ class PersonItem {
 };
 
 bool operator==(const PersonItem &lhs, const PersonItem &rhs);
+bool operator<(const PersonItem &p1, const PersonItem &p2);
+bool operator>(const PersonItem &p1, const PersonItem &p2);
+bool operator<=(const PersonItem &p1, const PersonItem &p2);
+
 
 #endif // _PERSON_CLASS
