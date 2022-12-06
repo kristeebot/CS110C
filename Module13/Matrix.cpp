@@ -60,16 +60,9 @@ struct comparator
     }
 };
 
-bool visited(vector<int> vertexSet, int index)
-{
-    return std::find(vertexSet.begin(), vertexSet.end(), index) != vertexSet.end();
-}
-
 void Matrix::printShortestPath(int startingVertex)
 {
     MatrixRow vertex = adjacencyMatrix[startingVertex];
-    vector<int> vertexSet; // Vertices we've visted
-    vertexSet.push_back(startingVertex);
 
     vector<int> outputWeights;
     vector<int> previousVertices;
@@ -86,18 +79,18 @@ void Matrix::printShortestPath(int startingVertex)
     // push everything into a stack and pop everything off
     // to reverse it, but if I have time I'll fix my own
     // heap to function as a min heap.
-    std::priority_queue<VertexItem, std::vector<VertexItem>, comparator> priorityQueue;
+    std::priority_queue<VertexItem, std::vector<VertexItem>, comparator> vertexSet;
 
     // Put the starting vertex into the priority queue
     VertexItem vi;
     vi.index = startingVertex;
     vi.weight = vertex[startingVertex];
-    priorityQueue.push(vi);
+    vertexSet.push(vi);
 
-    while (!priorityQueue.empty())
+    while (!vertexSet.empty())
     {
-        VertexItem val = priorityQueue.top();
-        priorityQueue.pop();
+        VertexItem val = vertexSet.top();
+        vertexSet.pop();
         int u = val.index;
 
         MatrixRow nextRow = adjacencyMatrix[u];
@@ -113,7 +106,7 @@ void Matrix::printShortestPath(int startingVertex)
                 VertexItem adjItem;
                 adjItem.index = v;
                 adjItem.weight = outputWeights[v];
-                priorityQueue.push(adjItem);
+                vertexSet.push(adjItem);
             }
         }
     }
