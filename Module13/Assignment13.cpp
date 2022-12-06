@@ -69,6 +69,7 @@ int main()
     currentRow++;
     currentColumn = 0;
 
+    currentColumn++;
     m.setItem(currentRow, currentColumn++, 75);
     currentColumn++;
     m.setItem(currentRow, currentColumn++, 0);
@@ -76,6 +77,8 @@ int main()
     currentColumn = 0;
     currentRow++;
 
+    currentColumn++;
+    currentColumn++;
     m.setItem(currentRow, currentColumn++, 250);
     m.setItem(currentRow, currentColumn++, 150);
     m.setItem(currentRow, currentColumn++, 0);
