@@ -2,84 +2,143 @@
 // KristinaHelwing
 // ProfMaxLuttrell
 // 112022
+// Module 12
+// This program uses a BST to sort people and birthdays
+
+//NOTES FOR TA:
+//Hacked Binary Node Tree from module 9 to function as a binary search tree
+//Sample Output at bottom of main()
 
 #include <iostream>
 #include "BinaryNodeTree.h"
 #include "Person.h"
-#include <cstdlib>
-#include <time.h>
-
 using namespace std;
 
-template <class ItemType>
-class Dictionary
+//global variable sub-optimal implementation
+string currentSearchMonth;
+//dictionary designed to work specifically people vs generic dictionary templated on item type
+class PersonDictionary
 {
 private:
-    BinaryNodeTree<ItemType> tree;
+    BinaryNodeTree<PersonItem> tree;
 
 public:
-    Dictionary() {}
+    PersonDictionary() {}
 
-    void addEntry(ItemType value)
+    void addEntry(Person value)
     {
-        tree.add(value);
+        tree.add(PersonItem(value.name, value));
     }
 
-    ItemType getEntry(ItemType targetValue)
+    PersonItem getEntryByName(Person targetValue)
     {
-        return tree.getEntry(targetValue);
+        return tree.getEntry(PersonItem(targetValue.name, targetValue));
+    }
+
+    // remove an entry
+    bool removeEntry(Person targetValue)
+    {
+        return tree.remove(PersonItem(targetValue.name, targetValue));
+    }
+
+    // search the dictionary for the birthday for a given name
+    string getBirthday(string name)
+    {
+        // TODO
+        return getEntryByName(Person(name, "")).value.birthday;
+    }
+
+    static void visitItem(PersonItem &item)
+    {
+        cout << item.value << endl;
+    }
+
+    static void visitMonthItem(PersonItem &item)
+    {
+        if (item.value.birthday.rfind(currentSearchMonth, 0) == 0)
+        {
+            cout << item.value << endl;
+        }
+    }
+    // display the name and birthday of every entry in the dictionary
+    void displayAllItems()
+    {
+        tree.inorderTraverse(visitItem);
+    }
+
+    // display everyone in the dictionary who was born in a given month
+    void displayAllForMonth(string month)
+    {
+        currentSearchMonth = month + "/";
+        tree.inorderTraverse(visitMonthItem);
     }
 };
-
-// For testing, some code from googling:
-string gen_random(const int len)
-{
-    static const char alphanum[] =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "abcdefghijklmnopqrstuvwxyz";
-    string tmp_s;
-    tmp_s.reserve(len);
-
-    for (int i = 0; i < len; ++i)
-    {
-        tmp_s += alphanum[rand() % (sizeof(alphanum) - 1)];
-    }
-
-    return tmp_s;
-}
-
-PersonItem makeRandomPerson()
-{
-    string name = gen_random(15);
-    int birthday = rand();
-    Person p(name, birthday);
-    return PersonItem(p.name, p);
-}
 
 int main()
 {
     srand(time(0));
 
-    Dictionary<PersonItem> myDict;
+    PersonDictionary myDict;
 
-    Person gavin("gavin", 12181962);
-    Person kristina("kristina", 7181978);
-    Person kathy("kathy", 7251952);
-    Person reinhard("reinhard", 4161949);
-    myDict.addEntry(PersonItem(gavin.name, gavin));
-    myDict.addEntry(PersonItem(kristina.name, kristina));
-    myDict.addEntry(PersonItem(kathy.name, kathy));
-    myDict.addEntry(PersonItem(reinhard.name, reinhard));
+    Person Kirk("Kirk", "3/22/2031");
+    Person Spock("Spock", "3/26/2031");
+    Person Bones("Bones", "1/20/2020");
+    Person Uhura("Uhura", "12/28/2032");
+    Person Scotty("Scotty", "3/3/2020");
+    Person Sulu("Sulu", "04/20/2037");
 
+    myDict.addEntry(Kirk);
+    myDict.addEntry(Spock);
+    myDict.addEntry(Bones);
+    myDict.addEntry(Uhura);
+    myDict.addEntry(Scotty);
+    myDict.addEntry(Sulu);
 
-    // add a bunch of random people so I can make sure we're really O(logN)
-    for (int i = 0; i < 10000; i++)
-    {
-        myDict.addEntry(makeRandomPerson());
-    }
+    myDict.displayAllItems();
 
-    PersonItem found = myDict.getEntry(PersonItem(reinhard.name));
-    cout << "Found: " << found.value << ", should be: " << reinhard << endl;
+    cout << "Entries for March: " << endl;
+    myDict.displayAllForMonth("3");
+
+    PersonItem found = myDict.getEntryByName(Kirk);
+    cout << "Found: " << found.value << ", should be: " << Kirk << endl;
+
+    // remove all the entries I added:
+    myDict.removeEntry(Kirk);
+    myDict.removeEntry(Spock);
+    myDict.removeEntry(Bones);
+    myDict.removeEntry(Uhura);
+    myDict.removeEntry(Scotty);
+    myDict.removeEntry(Sulu);
+
+    cout << "after removing all items:" << std::endl;
+
+    myDict.displayAllItems();
 
     return 0;
 }
+
+/*
+*****SAMPLE OUTPUT********
+1 arguments:
+argv[0] = '/Users/kristinahelwing/CS110C/Module12/Assignment12'
+Added with 1 comparisons
+Added with 2 comparisons
+Added with 2 comparisons
+Added with 3 comparisons
+Added with 3 comparisons
+Added with 4 comparisons
+Person(name: Bones, birthday: 1/20/2020)
+Person(name: Kirk, birthday: 3/22/2031)
+Person(name: Scotty, birthday: 3/3/2020)
+Person(name: Spock, birthday: 3/26/2031)
+Person(name: Sulu, birthday: 04/20/2037)
+Person(name: Uhura, birthday: 12/28/2032)
+Entries for March: 
+Person(name: Kirk, birthday: 3/22/2031)
+Person(name: Scotty, birthday: 3/3/2020)
+Person(name: Spock, birthday: 3/26/2031)
+searched with 1 recursions
+Found: Person(name: Kirk, birthday: 3/22/2031), should be: Person(name: Kirk, birthday: 3/22/2031)
+after removing all items:
+Process exited with status 0
+*/

@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Person::Person(string x, int y)
+Person::Person(string x, string y)
 {
     name = x;
     birthday = y;
@@ -23,7 +23,7 @@ bool operator==(const Person &lhs, const Person &rhs)
 
 std::ostream & operator<<(std::ostream &os, const Person &person)
 {
-    return os << "Person(name: " << person.name << ", age: " << person.birthday << ")";
+    return os << "Person(name: " << person.name << ", birthday: " << person.birthday << ")";
 }
 bool operator<(const Person &p1, const Person &p2)
 {

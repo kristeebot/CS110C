@@ -10,9 +10,9 @@ class Person
 {
 public:
     string name;
-    int birthday;
-    Person() : name(""), birthday(0) {}
-    Person(string x, int y);
+    string birthday;
+    Person() : name(""), birthday("") {}
+    Person(string x, string y);
     Person(const Person &rhs);
 };
 
