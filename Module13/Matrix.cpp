@@ -5,6 +5,8 @@
 #include "Matrix.h"
 #include "Heap.h"
 
+using namespace std;
+
 // // Step 1: Initialize
 // Create a set vertexSet that contains only vertex 0 (origin)
 // n = number of vertices in theGraph
@@ -52,18 +54,36 @@ struct comparator
 void Matrix::printShortestPath(int startingVertex)
 {
     MatrixRow vertex = adjacencyMatrix[startingVertex];
-    vector<int> vertexSet;
+    vector<int> vertexSet; // Vertices we've visted
     vertexSet.push_back(startingVertex);
-    // Heap<int> priorityQueue; // min heap
+
+    vector<int> outputWeights;
+    vector<int> previousVertices;
+
+    // These hold the output values
+    outputWeights.resize(adjacencyMatrix.size(), inf);
+    outputWeights[startingVertex] = 0;
+
+    previousVertices.resize(adjacencyMatrix.size(), -1);
+
     // Using the STL priority_queue after a lot of frustration
     // and googling and trying to make my old max Heap class into
-    // a min heap
+    // a min heap. I suppose I could also use the old heap,
+    // push everything into a stack and pop everything off
+    // to reverse it, but if I have time I'll fix my own
+    // heap to function as a min heap.
     std::priority_queue<VertexItem, std::vector<VertexItem>, comparator> priorityQueue;
     for (int i = 0; i < vertex.size(); i++)
     {
+        if (i == startingVertex)
+        {
+            // Don't revisit the starting vertex
+            continue;
+        }
         int value = vertex[i];
         if (value < inf)
-        { // only consider reachable nodes
+        {
+            // only consider reachable nodes
             VertexItem vi;
             vi.index = i;
             vi.weight = value;
@@ -71,13 +91,42 @@ void Matrix::printShortestPath(int startingVertex)
         }
     }
 
+    int lastWeight = 0;
     while (!priorityQueue.empty())
     {
         VertexItem val = priorityQueue.top();
-        cout << val.index << " weight: " << val.weight << endl;
-
-        // update for shortest paths here
-
         priorityQueue.pop();
+        if (std::find(vertexSet.begin(), vertexSet.end(), val.index) != vertexSet.end())
+        {
+            // already visited this node
+            continue;
+        }
+        MatrixRow nextRow = adjacencyMatrix[val.index];
+        for (int i = 0; i < nextRow.size(); i++)
+        {
+            int matrixWeight = nextRow[i];
+            int summedWeight = lastWeight + matrixWeight;
+
+            if (summedWeight < outputWeights[i])
+            {
+                outputWeights[i] = summedWeight;
+                previousVertices[i] = val.index;
+                VertexItem adjItem;
+                adjItem.index = i;
+                adjItem.weight = matrixWeight;
+                priorityQueue.push(adjItem);
+            }
+        }
     }
+
+    for (std::vector<int>::const_iterator i = outputWeights.begin(); i != outputWeights.end(); ++i)
+    {
+        cout << *i << ", ";
+    }
+    cout << endl;
+    for (std::vector<int>::const_iterator i = previousVertices.begin(); i != previousVertices.end(); ++i)
+    {
+        cout << *i << ", ";
+    }
+    cout << endl;
 }

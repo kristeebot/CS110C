@@ -10,9 +10,8 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <queue>
 #include "Matrix.h"
-#include "Heap.h"
+
 using namespace std;
 
 // For this assignment, you will implement Dijkstra’s algorithm
@@ -39,43 +38,25 @@ using namespace std;
 
 
 int main()
-{
-    // priority_queue<int, std::vector<int>, comparator> h;
-    // h.push(1000);
-    // h.push(19);
-    // h.push(1000);
-    // h.push(10);
-    // h.push(5000);
-    // h.push(4000);
-    // h.push(10000);
-    // h.push(200);
-    // while (!h.empty())
-    // {
-    //     cout << h.top() << endl;
-    //     h.pop();
-    // }
-    // while (!h.isEmpty()) {
-    //     int val = h.peekTop();
-    //     if (val > 10000) {
-    //         cout << "INF" << endl;
-    //     } else {
-    //         cout << val << endl;
-    //     }
-    //     h.remove();
-    // }
+{   
+    // Build the adjacency matrix:
     Matrix m(6);
     int currentRow = 0;
     int currentColumn = 0;
     m.setItem(currentRow, currentColumn++, 0);
     m.setItem(currentRow, currentColumn++, 120);
     m.setItem(currentRow, currentColumn++, 150);
+    currentColumn++;
+    currentColumn++;
     m.setItem(currentRow, currentColumn++, 500);
     currentColumn = 0;
     currentRow++;
 
     m.setItem(currentRow, currentColumn++, 120);
     m.setItem(currentRow, currentColumn++, 0);
+    currentColumn++;
     m.setItem(currentRow, currentColumn++, 75);
+    currentColumn++;
     m.setItem(currentRow, currentColumn++, 350);
     currentRow++;
     currentColumn = 0;
@@ -84,26 +65,20 @@ int main()
     currentColumn++;
     m.setItem(currentRow, currentColumn++, 0);
     currentColumn++;
-    m.setItem(currentRow, currentColumn, 250);
-    currentColumn++;
-    currentColumn = 0;
+    m.setItem(currentRow, currentColumn++, 250);
     currentRow++;
+    currentColumn = 0;
 
-    currentColumn++;
     m.setItem(currentRow, currentColumn++, 75);
     currentColumn++;
-    m.setItem(currentRow, currentColumn, 0);
-    m.setItem(currentRow, currentColumn, 150);
-    currentColumn++;
+    m.setItem(currentRow, currentColumn++, 0);
+    m.setItem(currentRow, currentColumn++, 150);
     currentColumn = 0;
     currentRow++;
 
-    currentColumn++;
-    currentColumn++;
     m.setItem(currentRow, currentColumn++, 250);
-    m.setItem(currentRow, currentColumn, 150);
-    m.setItem(currentRow, currentColumn, 0);
-    currentColumn++;
+    m.setItem(currentRow, currentColumn++, 150);
+    m.setItem(currentRow, currentColumn++, 0);
     currentColumn = 0;
     currentRow++;
 
@@ -112,7 +87,7 @@ int main()
     currentColumn++;
     currentColumn++;
     currentColumn++;
-    m.setItem(currentRow, currentColumn, 0);
+    m.setItem(currentRow, currentColumn++, 0);
     currentColumn = 0;
     currentRow++;
 
