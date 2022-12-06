@@ -5,7 +5,6 @@
 #include "Matrix.h"
 #include "Heap.h"
 
-
 // // Step 1: Initialize
 // Create a set vertexSet that contains only vertex 0 (origin)
 // n = number of vertices in theGraph
@@ -24,40 +23,61 @@
 // for (all vertices u not in vertexSet)
 // if (weight[u] > weight[v] + matrix[v][u])
 
+struct VertexItem
+{
+    int index;
+    int weight;
+};
+bool operator<(const VertexItem &v1, const VertexItem &v2)
+{
+    return v1.weight < v2.weight;
+}
+bool operator>(const VertexItem &v1, const VertexItem &v2)
+{
+    return v1.weight > v2.weight;
+}
+bool operator<=(const VertexItem &v1, const VertexItem &v2)
+{
+    return v1.weight <= v2.weight;
+}
 
 struct comparator
 {
-    bool operator()(int i, int j)
+    bool operator()(VertexItem i, VertexItem j)
     {
         return i > j;
     }
 };
 
 void Matrix::printShortestPath(int startingVertex)
-{ 
+{
     MatrixRow vertex = adjacencyMatrix[startingVertex];
-    vector <int> vertexSet;
+    vector<int> vertexSet;
     vertexSet.push_back(startingVertex);
     // Heap<int> priorityQueue; // min heap
     // Using the STL priority_queue after a lot of frustration
     // and googling and trying to make my old max Heap class into
     // a min heap
-    std::priority_queue<int, std::vector<int>, comparator> priorityQueue;
-    for (int i=0; i<vertex.size(); i++)
+    std::priority_queue<VertexItem, std::vector<VertexItem>, comparator> priorityQueue;
+    for (int i = 0; i < vertex.size(); i++)
     {
         int value = vertex[i];
-        if (value < inf) {
-            priorityQueue.push(value);
+        if (value < inf)
+        { // only consider reachable nodes
+            VertexItem vi;
+            vi.index = i;
+            vi.weight = value;
+            priorityQueue.push(vi);
         }
     }
-   
-    while (!priorityQueue.empty()) {
-        int val = priorityQueue.top();
-        if (val == inf) {
-            cout << "INF" << endl;
-        } else {
-            cout << val << endl;
-        }
+
+    while (!priorityQueue.empty())
+    {
+        VertexItem val = priorityQueue.top();
+        cout << val.index << " weight: " << val.weight << endl;
+
+        // update for shortest paths here
+
         priorityQueue.pop();
     }
 }
