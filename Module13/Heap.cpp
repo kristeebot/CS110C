@@ -42,23 +42,26 @@ void Heap<ItemType>::heapifyDown(int rootIndex)
 
     int largerChildIndex = getLeftIndex(rootIndex);
     int rightIndex = getRightIndex(rootIndex);
-
+    int smallest = rootIndex;
+ 
     if (rightIndex < items.size())
     {
 
-        if (items[rightIndex] > items[largerChildIndex])
+        if (items[rightIndex] < items[smallest])
         {
-            largerChildIndex = rightIndex;
+            smallest = rightIndex;
         }
     }
 
-    if (items[rootIndex] < items[largerChildIndex])
+    if (smallest != rootIndex)
+        // items[rootIndex] > items[largerChildIndex])
     {
-        swapItems(rootIndex, largerChildIndex);
+        swapItems(rootIndex, smallest);
+        heapifyDown(smallest);
     }
 
     // Transform the semiheap rooted at largerChildIndex into a heap
-    heapifyDown(largerChildIndex);
+    
     // else root is a leaf, so we are done
 }
 
@@ -75,7 +78,7 @@ void Heap<ItemType>::heapify()
     while ((newDataIndex > 0) && !inPlace)
     {
         int parentIndex = (newDataIndex - 1) / 2;
-        if (items[newDataIndex] <= items[parentIndex])
+        if (items[newDataIndex] >= items[parentIndex])
         {
             inPlace = true;
         }
@@ -96,6 +99,7 @@ bool Heap<ItemType>::remove()
     heapifyDown(0);
     return true;
 }
+
 template <class ItemType>
 ItemType Heap<ItemType>::peekTop()
 {

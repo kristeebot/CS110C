@@ -10,7 +10,9 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <queue>
 #include "Matrix.h"
+#include "Heap.h"
 using namespace std;
 
 // For this assignment, you will implement Dijkstra’s algorithm
@@ -35,8 +37,32 @@ using namespace std;
 // to compute and print out the cheapest cost from San Francisco (vertex 0) to each other city.
 // It may help you debug to print out the weight array, v, and vertex set for each iteration of the algorithm.
 
+
 int main()
 {
+    // priority_queue<int, std::vector<int>, comparator> h;
+    // h.push(1000);
+    // h.push(19);
+    // h.push(1000);
+    // h.push(10);
+    // h.push(5000);
+    // h.push(4000);
+    // h.push(10000);
+    // h.push(200);
+    // while (!h.empty())
+    // {
+    //     cout << h.top() << endl;
+    //     h.pop();
+    // }
+    // while (!h.isEmpty()) {
+    //     int val = h.peekTop();
+    //     if (val > 10000) {
+    //         cout << "INF" << endl;
+    //     } else {
+    //         cout << val << endl;
+    //     }
+    //     h.remove();
+    // }
     Matrix m(6);
     int currentRow = 0;
     int currentColumn = 0;

@@ -12,12 +12,12 @@ class Matrix
 {
 private:
     vector<MatrixRow> adjacencyMatrix;
-    double inf; // convenient infinity
+    int inf; // convenient infinity
 
 public:
     Matrix(int size)
     {
-        inf = std::numeric_limits<double>::infinity();
+        inf = 0x0fffffff; // Not really infinity, but close enough today
         adjacencyMatrix.resize(size);
         for (int i = 0; i < size; i++)
         {

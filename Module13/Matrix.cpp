@@ -1,6 +1,7 @@
 
 #include <vector>
 #include <iostream>
+#include <queue>
 #include "Matrix.h"
 #include "Heap.h"
 
@@ -23,22 +24,40 @@
 // for (all vertices u not in vertexSet)
 // if (weight[u] > weight[v] + matrix[v][u])
 
+
+struct comparator
+{
+    bool operator()(int i, int j)
+    {
+        return i > j;
+    }
+};
+
 void Matrix::printShortestPath(int startingVertex)
 { 
     MatrixRow vertex = adjacencyMatrix[startingVertex];
     vector <int> vertexSet;
     vertexSet.push_back(startingVertex);
-    Heap <int> priorityQueue;
+    // Heap<int> priorityQueue; // min heap
+    // Using the STL priority_queue after a lot of frustration
+    // and googling and trying to make my old max Heap class into
+    // a min heap
+    std::priority_queue<int, std::vector<int>, comparator> priorityQueue;
     for (int i=0; i<vertex.size(); i++)
     {
         int value = vertex[i];
         if (value < inf) {
-            priorityQueue.add(value);
+            priorityQueue.push(value);
         }
     }
-    while (!priorityQueue.isEmpty()) {
-        cout << priorityQueue.peekTop() << endl;
-        priorityQueue.remove();
+   
+    while (!priorityQueue.empty()) {
+        int val = priorityQueue.top();
+        if (val == inf) {
+            cout << "INF" << endl;
+        } else {
+            cout << val << endl;
+        }
+        priorityQueue.pop();
     }
-    cout << "TO DO" << endl;
 }
