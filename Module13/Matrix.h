@@ -32,5 +32,4 @@ public:
     void printShortestPath(int startingNode);
 };
 
-
 #endif // MATRIX_H_
