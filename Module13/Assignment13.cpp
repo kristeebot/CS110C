@@ -37,7 +37,6 @@ using namespace std;
 // to compute and print out the cheapest cost from San Francisco (vertex 0) to each other city.
 // It may help you debug to print out the weight array, v, and vertex set for each iteration of the algorithm.
 
-
 int main()
 {
     // priority_queue<int, std::vector<int>, comparator> h;
@@ -64,57 +63,66 @@ int main()
     //     h.remove();
     // }
     Matrix m(6);
+    // 0
     int currentRow = 0;
     int currentColumn = 0;
     m.setItem(currentRow, currentColumn++, 0);
     m.setItem(currentRow, currentColumn++, 120);
     m.setItem(currentRow, currentColumn++, 150);
-    m.setItem(currentRow, currentColumn++, 500);
-    currentColumn = 0;
     currentRow++;
+    currentRow++;
+    m.setItem(currentRow, currentColumn++, 500);
 
+    // 1
+    currentRow++;
+    currentColumn = 0;
     m.setItem(currentRow, currentColumn++, 120);
     m.setItem(currentRow, currentColumn++, 0);
+    currentRow++;
     m.setItem(currentRow, currentColumn++, 75);
+    currentRow++;
     m.setItem(currentRow, currentColumn++, 350);
+
+    // 2
     currentRow++;
     currentColumn = 0;
-
     m.setItem(currentRow, currentColumn++, 150);
     currentColumn++;
     m.setItem(currentRow, currentColumn++, 0);
     currentColumn++;
     m.setItem(currentRow, currentColumn, 250);
     currentColumn++;
-    currentColumn = 0;
-    currentRow++;
 
+    // 3
+    currentRow++;
+    currentColumn = 0;
     currentColumn++;
     m.setItem(currentRow, currentColumn++, 75);
     currentColumn++;
     m.setItem(currentRow, currentColumn, 0);
     m.setItem(currentRow, currentColumn, 150);
     currentColumn++;
-    currentColumn = 0;
-    currentRow++;
+    currentColumn++;
 
+    // 4
+    currentRow++;
+    currentColumn = 0;
     currentColumn++;
     currentColumn++;
     m.setItem(currentRow, currentColumn++, 250);
     m.setItem(currentRow, currentColumn, 150);
     m.setItem(currentRow, currentColumn, 0);
     currentColumn++;
-    currentColumn = 0;
-    currentRow++;
 
+    // 5
+    currentRow++;
+    currentColumn = 0;
     m.setItem(currentRow, currentColumn++, 500);
     m.setItem(currentRow, currentColumn++, 350);
     currentColumn++;
     currentColumn++;
     currentColumn++;
     m.setItem(currentRow, currentColumn, 0);
-    currentColumn = 0;
-    currentRow++;
 
     m.printShortestPath(0);
 
